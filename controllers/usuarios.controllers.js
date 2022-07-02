@@ -6,11 +6,19 @@ import { generarJWT } from "../helpers/jwt.js";
 
 export const getUsuarios = async (req,res)=>{
 
-    const usuarios = await Usuario.find();
+    const desde = Number(req.query.desde) || 0
+    console.log(desde)
+
+    const usuarios = await Usuario.find()
+                                  .skip(desde)
+                                  .limit(2)
+                                  
+    const total = await Usuario.count()
+   
     res.json({
         ok:true,
         usuarios,
-        uid:req.uid
+        total
     })
 
 }
