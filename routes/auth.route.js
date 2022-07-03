@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login } from "../controllers/auth.controllers.js";
+import { googleSingIn, login } from "../controllers/auth.controllers.js";
 import { check } from 'express-validator'
 import { validarCampos } from "../middlewares/validar-campos.js";
 
@@ -12,3 +12,10 @@ router2.post('/',
     validarCampos
 ]
 ,login)
+
+router2.post('/google',
+[
+    check('token','el token de google es obligatorio').not().isEmpty(),
+    validarCampos
+]
+,googleSingIn)
