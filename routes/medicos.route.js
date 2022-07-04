@@ -18,6 +18,10 @@ router4.post('/',
 ]
 ,crearMedicos)
 
-router4.put('/:id',[],actualizarMedicos)
+router4.put('/:id',[
+    validarJWT,
+    check('nombre','el nombre es necesario').notEmpty(),
+    validarCampos
+],actualizarMedicos)
 
-router4.delete('/:id',borrarMedicos)
+router4.delete('/:id',validarJWT,borrarMedicos)

@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { googleSingIn, login } from "../controllers/auth.controllers.js";
+import { googleSingIn, login, renewToken } from "../controllers/auth.controllers.js";
 import { check } from 'express-validator'
 import { validarCampos } from "../middlewares/validar-campos.js";
+import { validarJWT } from "../middlewares/validar-jwt.js";
 
 export const router2 = Router();
 
@@ -19,3 +20,8 @@ router2.post('/google',
     validarCampos
 ]
 ,googleSingIn)
+
+router2.get('/renew',validarJWT,
+renewToken
+
+)

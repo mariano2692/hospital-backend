@@ -17,8 +17,9 @@ router3.post('/',
 ,crearHospitales)
 
 router3.put('/:id',
-[]
+[check('nombre','el nombre del hospital es obligatorio').notEmpty(),
+validarCampos]
 ,actualizarHospitales)
 
-router3.delete('/:id',borrarHospitales)
+router3.delete('/:id',validarJWT,borrarHospitales)
 
