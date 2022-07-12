@@ -12,6 +12,27 @@ export const getMedicos = async (req,res = response) => {
     })
 }
 
+export const getMedicosById = async (req,res = response) => {
+    const uid = req.params.id
+
+    try {
+    const medico = await Medicos.findById(uid)
+                                 .populate('usuario','nombre')
+                                 .populate('hospital','nombre')   
+    res.json({
+        ok:true,
+        medico
+    })
+        
+    } catch (error) {
+    res.json({
+        ok:false,
+        msg:'hable con el administrador'
+    })    
+    }
+    
+}
+
 
 export const crearMedicos = async (req,res = response) => {
     const uid = req.uid
@@ -46,14 +67,15 @@ export const actualizarMedicos = async (req,res = response) => {
             msg:'no existe ningun medico con ese id'
         })
 
-        const{nombre} = req.body
-        const existeNombre = await Medicos.findOne({nombre})
-        if(existeNombre) return res.status(400).json({
-            ok:false,
-            msg:'ya existe un medico con ese nombre'
-        })
+        const{nombre,hospital} = req.body
+        // const existeNombre = await Medicos.findOne({nombre})
+        // if(existeNombre) return res.status(400).json({
+        //     ok:false,
+        //     msg:'ya existe un medico con ese nombre'
+        // })
         const actualizarMedico = {
-            nombre
+            nombre,
+            hospital
         }
         const medicosActualizados = await Medicos.findByIdAndUpdate(uid,actualizarMedico,{new:true})
 

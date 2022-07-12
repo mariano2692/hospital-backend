@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { actualizarMedicos, borrarMedicos, crearMedicos, getMedicos } from "../controllers/medicos.controllers.js";
+import { actualizarMedicos, borrarMedicos, crearMedicos, getMedicos, getMedicosById } from "../controllers/medicos.controllers.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 
@@ -25,3 +25,5 @@ router4.put('/:id',[
 ],actualizarMedicos)
 
 router4.delete('/:id',validarJWT,borrarMedicos)
+
+router4.get('/:id',validarJWT,getMedicosById)

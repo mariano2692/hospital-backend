@@ -11,7 +11,7 @@ export const getUsuarios = async (req,res)=>{
 
     const usuarios = await Usuario.find()
                                   .skip(desde)
-                                  .limit(2)
+                                  .limit()
                                   
     const total = await Usuario.count()
    
@@ -84,12 +84,12 @@ export const actualizarUsuarios = async (req,res) => {
         
         //actualizaciones
         const {password,google,email,...campos} = req.body;
-        const existeEmail = await Usuario.findOne({email});
-        if(existeEmail)return res.status(400).json({
+       
+        if(!usuarioDB.google) campos.email = email
+        if(usuarioDB.email !== email) return res.status(400).json({
             ok:false,
-            msg:'ya existe un usuario con ese email'
+            msg:'usuarios de google no tienen permitido cambiar su correo'
         })
-
         const usuarioActualizado = await Usuario.findByIdAndUpdate(uid,campos)
 
         res.json({
