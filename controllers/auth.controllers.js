@@ -3,6 +3,7 @@ import { Usuario } from "../models/usuarios.js";
 import bcrypt from "bcryptjs"
 import { generarJWT } from "../helpers/jwt.js";
 import { googleVerify } from "../helpers/google-verify.js";
+import { getMenu } from "../helpers/menu-frontend.js";
 
 
 
@@ -31,8 +32,9 @@ export const login = async(req,res= response)=>{
 
         res.status(200).json({
             ok:true,
-            token
-        })
+            token,
+            menu: getMenu(usuarioDB.role)
+        });
         
     } catch (error) {
         console.log(error)
@@ -71,7 +73,8 @@ export const googleSingIn =async (req,res=response)=>{
             email,
             name,
             picture,
-            token
+            token,
+            menu:getMenu(usuario.role)
         })
     } catch (error) {
         console.log(error)
@@ -101,7 +104,8 @@ export const renewToken = async (req,res=response)=>{
     res.json({
         ok:true,
         token,
-        usuario
+        usuario,
+        menu:getMenu(usuario.role)
 
     })
 
