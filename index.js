@@ -1,5 +1,13 @@
 import express from "express";
 import "dotenv/config.js"
+import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+
 import { dbConnection } from "./database/config.js";
 import cors from "cors";
 import { router } from "./routes/usuarios.route.js";
@@ -41,6 +49,14 @@ app.use('/api/medicos',router4)
 app.use('/api/login',router2)
 app.use('/api/todo',router5)
 app.use('/api/upload',router6)
+
+//lo ultimo
+
+
+app.get('*',(req,res)=>{
+    res.sendFile(path.resolve(__dirname,'public/index.html'));
+})
+
 
 
 
